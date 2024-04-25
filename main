@@ -1,0 +1,51 @@
+from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer
+
+# Define documents
+documents = [
+    "What are the services provided by Palmmind? Software development, Chatbot Implementation",
+    "Can you call me? Unfortunately, I cannot directly call you, but I can collect your information if you'd like a human to reach out.",
+]
+
+
+chatbot = ChatBot("MyChatbot")
+
+trainer = ListTrainer(chatbot)
+trainer.train(documents)
+
+# Function to validate user input (phone number and email)
+def is_valid(user_input, type):
+  if type == "phone":
+    return user_input.isdigit() and len(user_input) == 10
+  elif type == "email":
+    return "@" in user_input and "." in user_input
+  else:
+    return False
+
+# Main loop for conversation
+while True:
+  user_input = input("You: ")
+  if user_input.lower() == "quit":
+    break
+
+  if "call" in user_input.lower():
+    print(chatbot.get_response("Can you call me?"))
+    name = input("Enter your name: ")
+    while True:
+      phone_number = input("Enter your phone number (10 digits): ")
+      if is_valid(phone_number, "phone"):
+        break
+      else:
+        print("Invalid phone number. Please enter a 10-digit number.")
+    while True:
+      email = input("Enter your email address: ")
+      if is_valid(email, "email"):
+        break
+      else:
+        print("Invalid email address. Please enter a valid email.")
+    print(f"Thank you, {name}. We'll have a human representative reach out to you at {phone_number} or {email} soon.")
+    continue
+
+  # Get response from chatbot
+  response = chatbot.get_response(user_input)
+  print(f"Chatbot: {response}")

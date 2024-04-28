@@ -4,7 +4,7 @@ from chatterbot.trainers import ListTrainer
 # Define documents
 documents = [
     "What are the services provided by Palmmind? Software development, Chatbot Implementation",
-    "Can you call me? Unfortunately, I cannot directly call you, but I can collect your information if you'd like a human to reach out.",
+    "Can you call me? Unfortunately, I cannot directly call you, but I can collect your information if you'd like a Palmmind team to reach out.",
 ]
 
 
